@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @EnableJpaAuditing
 @Component
-public class AuditorAwareImpl implements AuditorAware<Long> {
+public class AuditorAwareImpl implements AuditorAware<String> {
 
     private static final String ANONYMOUS_USER = "anonymousUser";
 
@@ -20,13 +20,13 @@ public class AuditorAwareImpl implements AuditorAware<Long> {
     }
 
     @Override
-    public Optional<Long> getCurrentAuditor() {
+    public Optional<String> getCurrentAuditor() {
 
         return Optional.ofNullable(SecurityContextHolder.getContext())
                 .map(SecurityContext::getAuthentication)
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getName)
                 .filter(AuditorAwareImpl::notEqualsAnonymousUser)
-                .map(Long::valueOf);
+                .map(String::valueOf);
     }
 }
