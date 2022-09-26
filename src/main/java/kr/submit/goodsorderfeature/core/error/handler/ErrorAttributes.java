@@ -1,4 +1,8 @@
 package kr.submit.goodsorderfeature.core.error.handler;
 
-public class ErrorAttributes {
+import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ErrorAttributes extends DefaultErrorAttributes {
 }

@@ -1,6 +1,6 @@
 package kr.submit.goodsorderfeature.api.dto;
 
-import kr.submit.goodsorderfeature.api.domain.GoodsEntity;
+import kr.submit.goodsorderfeature.api.domain.entity.GoodsEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

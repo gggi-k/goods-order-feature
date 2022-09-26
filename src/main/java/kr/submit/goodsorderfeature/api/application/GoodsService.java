@@ -1,6 +1,6 @@
 package kr.submit.goodsorderfeature.api.application;
 
-import kr.submit.goodsorderfeature.api.domain.GoodsEntity;
+import kr.submit.goodsorderfeature.api.domain.entity.GoodsEntity;
 import kr.submit.goodsorderfeature.api.dto.GoodsRequest;
 import kr.submit.goodsorderfeature.api.dto.GoodsResponse;
 import kr.submit.goodsorderfeature.api.repository.GoodsRepository;

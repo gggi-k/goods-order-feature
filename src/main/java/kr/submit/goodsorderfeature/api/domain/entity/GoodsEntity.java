@@ -1,4 +1,4 @@
-package kr.submit.goodsorderfeature.api.domain;
+package kr.submit.goodsorderfeature.api.domain.entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
