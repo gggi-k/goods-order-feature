@@ -76,7 +76,7 @@ public class SecurityConfig {
                                                                                          LoginSuccessHandler loginSuccessHandler,
                                                                                          LoginFailureHandler loginFailureHandler) {
             UsernamePasswordAuthenticationFilter filter = new JsonUsernamePasswordAuthenticationFilter(authenticationManager, objectMapper, validator);
-            filter.setFilterProcessesUrl("/szs/login");
+            filter.setFilterProcessesUrl("/login");
             filter.setAuthenticationSuccessHandler(loginSuccessHandler);
             filter.setAuthenticationFailureHandler(loginFailureHandler);
             return filter;
