@@ -1,16 +1,14 @@
 package kr.submit.goodsorderfeature.api.domain.code;
 
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum OrderStatus {
+public enum DeliveryStatus {
 
-    PROCESS("주문 접수"),
-    COMPLETE("주문 완료"),
-    CANCEL("주문 취소");
+    READY("배송 준비중"),
+    COMPLETE("배송 완료");
 
     private final String name;
 }

@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseEntity {
+public abstract class BaseEntity {
 
     @Builder.Default
     @Type(type = "yes_no")
@@ -38,10 +38,10 @@ public class BaseEntity {
     private LocalDateTime createdAt;
 
     @CreatedBy
-    @ColumnDefault("0")
+    @ColumnDefault("'ANONYMOUS'")
     @Comment("등록자")
     @Column(name = "CREATED_BY", updatable = false, nullable = false)
-    private Long createdBy;
+    private String createdBy;
 
     @LastModifiedDate
     @Comment("갱신일시")
@@ -51,5 +51,5 @@ public class BaseEntity {
     @LastModifiedBy
     @Comment("갱신자")
     @Column(name = "UPDATED_BY")
-    private Long updatedBy;
+    private String updatedBy;
 }

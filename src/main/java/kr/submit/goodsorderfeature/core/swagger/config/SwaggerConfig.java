@@ -4,6 +4,8 @@ package kr.submit.goodsorderfeature.core.swagger.config;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.models.Operation;
@@ -34,7 +36,7 @@ import java.util.Optional;
 @Import(SpringDocConfiguration.class)
 @SecurityScheme(type = SecuritySchemeType.HTTP, name = "jwtToken", scheme = "bearer", bearerFormat = "JWT")
 @OpenAPIDefinition(
-    info = @Info(title = "주문, 상품관리 기능", description = "주문, 상품관리", version = "1.0.0"),
+    info = @Info(title = "주문, 상품관리 기능", description = "주문, 상품관리\n 아이디: test1, 비밀번호: test1\n아이디: test2, 비밀번호: test2", version = "1.0.0"),
     security = @SecurityRequirement(name = "jwtToken")
 )
 public class SwaggerConfig {
