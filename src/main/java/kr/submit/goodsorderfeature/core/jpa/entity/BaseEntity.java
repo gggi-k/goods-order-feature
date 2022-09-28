@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 import java.time.LocalDateTime;
 
 @Getter
@@ -24,11 +25,17 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
+    @Version
+    @Column(name = "VERSION", nullable = false)
+    @Comment("버전")
+    private long version;
+
+    @SuppressWarnings("all")
     @Builder.Default
     @Type(type = "yes_no")
     @ColumnDefault("'Y'")
     @Comment("활성여부")
-    @Column(name = "ENABLED", updatable = false, nullable = false)
+    @Column(name = "ENABLED", nullable = false)
     private boolean enabled = true;
 
     @CreatedDate

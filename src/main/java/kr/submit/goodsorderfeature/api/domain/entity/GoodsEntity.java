@@ -20,10 +20,10 @@ import java.util.UUID;
 @SuperBuilder
 @Entity
 @Table(name = "GOODS")
-@OptimisticLocking
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "UPDATE GOODS SET ENABLED = 'N' WHERE GOODS_ID = ?")
+@Where(clause = "ENABLED = 'Y'")
+@SQLDelete(sql = "UPDATE GOODS SET ENABLED = 'N' WHERE GOODS_ID = ? AND VERSION = ?")
 public class GoodsEntity extends BaseEntity {
 
     @Setter(AccessLevel.NONE)
@@ -40,10 +40,5 @@ public class GoodsEntity extends BaseEntity {
     @Column(name = "PRICE", nullable = false)
     @Comment("가격")
     private long price;
-
-    @Version
-    @Column(name = "VERSION", nullable = false)
-    @Comment("버전")
-    private int version;
 
 }

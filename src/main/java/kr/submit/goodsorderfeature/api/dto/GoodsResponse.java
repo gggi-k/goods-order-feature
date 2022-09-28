@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Getter
 public class GoodsResponse {
 
-    @Schema(description = "상품아이디", example = "245609095435")
+    @Schema(description = "상품아이디", example = "3")
     private final Long goodsId;
     @Schema(description = "상품명", example = "상품1")
     private final String name;

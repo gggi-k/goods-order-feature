@@ -1,7 +1,6 @@
 package kr.submit.goodsorderfeature.api.domain.entity;
 
 import kr.submit.goodsorderfeature.api.domain.vo.OrderGoodsId;
-import kr.submit.goodsorderfeature.api.dto.GoodsResponse;
 import kr.submit.goodsorderfeature.core.jpa.entity.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -16,7 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString
-@SuperBuilder
+@Builder
 @Entity
 @Table(name = "ORDER_GOODS")
 public class OrderGoodsEntity extends BaseEntity {
@@ -33,14 +32,14 @@ public class OrderGoodsEntity extends BaseEntity {
     @Comment("갯수")
     private int count;
 
-    @Column(name = "COUNT", nullable = false)
+    @Column(name = "PRICE", nullable = false)
     @ColumnDefault("'0'")
     @Comment("가격")
     private long price;
 
     @Setter
     @ManyToOne
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")
+    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", insertable = false, updatable = false, nullable = false)
     private OrderEntity order;
 
     public long getTotalPrice() {

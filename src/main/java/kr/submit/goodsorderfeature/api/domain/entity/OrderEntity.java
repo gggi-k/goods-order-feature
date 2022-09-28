@@ -37,6 +37,7 @@ public class OrderEntity extends BaseEntity {
     @Comment("주문상태")
     private OrderStatus orderStatus;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<OrderGoodsEntity> orderGoods = new ArrayList<>();
 

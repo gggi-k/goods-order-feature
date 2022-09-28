@@ -14,6 +14,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +38,7 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public EntityModel<OrderResponse> findByOrderId(@PathVariable Long orderId) {
         return EntityModel.of(orderService.findByOrderId(orderId),
-                    WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(OrderController.class).cancelByOrderId(orderId)).withRel("cancel")
+                    WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(OrderController.class).cancelByOrderId(orderId, null)).withRel("cancel").withType(HttpMethod.PATCH.name())
                 );
     }
 
@@ -52,8 +53,8 @@ public class OrderController {
     }
 
     @PatchMapping("/cancel/{orderId}")
-    public ResponseEntity<OrderResponse> cancelByOrderId(@PathVariable Long orderId, @RequestBody List<OrderGoodsRequest> orderGoodsRequests) {
-        orderService.cancel(OrderRequest.create()
+    public OrderResponse cancelByOrderId(@PathVariable Long orderId, @RequestBody List<OrderGoodsRequest> orderGoodsRequests) {
+        return orderService.cancel(OrderRequest.create()
                 .setOrderId(orderId)
                 .setOrderGoodsIds(orderGoodsRequests));
     }

@@ -29,7 +29,3 @@ server:
   error:
     whitelabel:
       enabled: false
-    include-stacktrace: never
-    include-message: always
-    include-exception: false
-    include-binding-errors: always

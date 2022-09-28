@@ -50,9 +50,9 @@ public class GoodsService {
 
         GoodsEntity goodsEntity = goodsRepository.findById(goodsRequest.getGoodsId()).orElseThrow(() -> new NotFoundException("존재하지 않는 상품입니다"));
 
-        return GoodsResponse.fromEntity(goodsEntity
-                    .setName(goodsRequest.getName())
-                    .setPrice(goodsEntity.getPrice()));
+        return GoodsResponse.fromEntity(goodsRepository.save(goodsEntity
+                .setName(goodsRequest.getName())
+                .setPrice(goodsRequest.getPrice())));
     }
 
     public void deleteByGoodsId(Long goodsId) {

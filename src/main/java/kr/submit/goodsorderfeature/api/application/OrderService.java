@@ -47,6 +47,6 @@ public class OrderService {
     public OrderResponse cancel(OrderRequest orderRequest) {
         OrderEntity orderEntity = orderRepository.findById(orderRequest.getOrderId()).orElseThrow(() -> new NotFoundException("존재하지 않는 주문입니다"));
 
-        return OrderResponse.fromEntity(null);
+        return OrderResponse.fromEntity(orderEntity);
     }
 }

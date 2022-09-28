@@ -1,8 +1,6 @@
 package kr.submit.goodsorderfeature.api.presentation;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.submit.goodsorderfeature.api.application.GoodsService;
 import kr.submit.goodsorderfeature.api.dto.GoodsRequest;
@@ -11,14 +9,13 @@ import kr.submit.goodsorderfeature.core.swagger.annotation.ParameterHidden;
 import kr.submit.goodsorderfeature.core.swagger.annotation.SwaggerApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.LinkRelation;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -40,8 +37,8 @@ public class GoodsController {
 
     @Operation(summary = "상품목록 조회")
     @GetMapping
-    public PagedModel<EntityModel<GoodsResponse>> findAllByPageable(@PageableDefault Pageable pageable, @ParameterHidden PagedResourcesAssembler<GoodsResponse> assembler) {
-        return assembler.toModel(goodsService.findAllByPageable(pageable));
+    public Page<GoodsResponse> findAllByPageable(@ParameterHidden @PageableDefault Pageable pageable) {
+        return goodsService.findAllByPageable(pageable);
     }
 
     @Operation(summary = "상품 조회")
@@ -49,8 +46,8 @@ public class GoodsController {
     public EntityModel<GoodsResponse> findByGoodsId(@PathVariable Long goodsId) {
 
         return EntityModel.of(goodsService.findByGoodsId(goodsId),
-                    entityLinks.linkForItemResource(GoodsResponse.class, goodsId).withRel("update"),
-                    entityLinks.linkForItemResource(GoodsResponse.class, goodsId).withRel("delete")
+                    entityLinks.linkToItemResource(GoodsResponse.class, goodsId).withRel("update").withType(HttpMethod.PUT.name()),
+                    entityLinks.linkToItemResource(GoodsResponse.class, goodsId).withRel("delete").withType(HttpMethod.DELETE.name())
                 );
     }
 
