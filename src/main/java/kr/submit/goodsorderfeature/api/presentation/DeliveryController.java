@@ -1,5 +1,6 @@
 package kr.submit.goodsorderfeature.api.presentation;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.submit.goodsorderfeature.api.application.DeliveryService;
 import kr.submit.goodsorderfeature.api.dto.DeliveryResponse;
@@ -24,6 +25,7 @@ public class DeliveryController {
 
     private final DeliveryService deliveryService;
 
+    @Operation(summary = "배달 완료")
     @PatchMapping("/complete/{deliveryId}")
     public DeliveryResponse complete(@PathVariable Long deliveryId) {
         return deliveryService.complete(deliveryId);

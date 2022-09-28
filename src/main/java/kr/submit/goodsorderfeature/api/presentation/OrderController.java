@@ -1,6 +1,7 @@
 package kr.submit.goodsorderfeature.api.presentation;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.submit.goodsorderfeature.api.application.OrderService;
 import kr.submit.goodsorderfeature.api.domain.entity.OrderEntity;
@@ -37,6 +38,7 @@ public class OrderController {
     private final OrderService orderService;
     private final EntityLinks entityLinks;
 
+    @Operation(summary = "주문 조회")
     @GetMapping("/{orderId}")
     public EntityModel<OrderResponse> findByOrderId(@PathVariable Long orderId) {
         return EntityModel.of(orderService.findByOrderId(orderId),
@@ -44,6 +46,7 @@ public class OrderController {
                 );
     }
 
+    @Operation(summary = "주문 등록")
     @PostMapping
     public ResponseEntity<OrderResponse> create(@Validated(OrderView.Create.class)
                                                 @JsonView(OrderView.Create.class)
@@ -56,6 +59,7 @@ public class OrderController {
         return ResponseEntity.created(location).body(orderResponse);
     }
 
+    @Operation(summary = "주문 부분 취소")
     @PatchMapping("/cancel/{orderId}")
     public OrderResponse cancelByOrderId(@PathVariable Long orderId,
                                          @Validated(OrderView.Cancel.class)

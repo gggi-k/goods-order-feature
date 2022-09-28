@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 public enum OrderStatus {
 
     PROCESS("주문 접수"),
-    COMPLETE("주문 완료"),
     CANCEL("주문 취소");
 
     private final String name;

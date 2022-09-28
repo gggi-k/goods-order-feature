@@ -5,6 +5,7 @@ import kr.submit.goodsorderfeature.api.domain.vo.Address;
 import kr.submit.goodsorderfeature.core.jpa.entity.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
 
@@ -19,8 +20,10 @@ public class DeliveryEntity extends BaseEntity {
 
     @Id
     @GeneratedValue
+    @Comment("배달아이디")
     private Long deliveryId;
 
+    @Comment("배달상태")
     @Column(name = "DELIVERY_STATUS", nullable = false)
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;

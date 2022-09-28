@@ -31,7 +31,42 @@ http://localhost:8080/h2-console
 ## 엔티티
 **상품**
 
+|속성|설명|
+|----|-----|
+| goodsId | 상품아이디 |
+| name | 상품명 |
+| price | 가격 |
+
 **주문**
+
+|속성|설명|
+|----|-----|
+| orderId | 주문아이디 |
+| orderStatus | 주문상태(주문 접수, 주문 취소) |
+| orderGoods | 주문상품목록 |
+| delivery |  배달 |
+
+**주문상품**
+
+|속성|설명|
+|----|-----|
+| orderGoodsId | 주문상품아이디 |
+| goodsId | 상품아이디 |
+| name | 상품명 |
+| count |  갯수 |
+| price | 가격 |
+| orderGoodsStatus | 주문상품상태(주문 접수, 주문 취소) |
+
+**배달**
+
+|속성|설명|
+|----|-----|
+| deliveryId | 배달아이디 |
+| deliveryStatus | 배달상태(준비, 완료) |
+| address | 이름 |
+| addressDetail | 주민번호 |
+| zipCode | 이름 |
+
 
 ## 구현기능
 
