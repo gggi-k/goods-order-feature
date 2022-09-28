@@ -37,6 +37,13 @@ public class DeliveryEntity extends BaseEntity {
     @OneToOne(mappedBy = "delivery")
     private OrderEntity orderEntity;
 
+    public static DeliveryEntity ofAddressForReady(Address address) {
+        return DeliveryEntity.builder()
+                .address(address)
+                .deliveryStatus(DeliveryStatus.READY)
+                .build();
+    }
+
     public boolean isComplete() {
         return DeliveryStatus.COMPLETE == this.deliveryStatus;
     }

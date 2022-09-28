@@ -1,5 +1,6 @@
 package kr.submit.goodsorderfeature.api.application;
 
+import kr.submit.goodsorderfeature.api.domain.entity.DeliveryEntity;
 import kr.submit.goodsorderfeature.api.domain.entity.GoodsEntity;
 import kr.submit.goodsorderfeature.api.domain.entity.OrderEntity;
 import kr.submit.goodsorderfeature.api.domain.entity.OrderGoodsEntity;
@@ -7,10 +8,12 @@ import kr.submit.goodsorderfeature.api.dto.GoodsResponse;
 import kr.submit.goodsorderfeature.api.dto.OrderGoodsRequest;
 import kr.submit.goodsorderfeature.api.dto.OrderRequest;
 import kr.submit.goodsorderfeature.api.dto.OrderResponse;
+import kr.submit.goodsorderfeature.api.event.OrderEvent;
 import kr.submit.goodsorderfeature.api.repository.OrderRepository;
 import kr.submit.goodsorderfeature.core.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +30,7 @@ public class OrderService {
 
     private final GoodsService goodsService;
     private final OrderRepository orderRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional(readOnly = true)
     public OrderResponse findByOrderId(Long orderId) {
@@ -35,18 +39,20 @@ public class OrderService {
 
     public OrderResponse create(OrderRequest orderRequest) {
 
-        List<OrderGoodsRequest> goodsIds = orderRequest.getOrderGoodsIds();
-        final List<GoodsResponse> goodsResponses = goodsService.findAllByGoodsIds(goodsIds.stream().map(OrderGoodsRequest::getOrderGoodsId)
-                .collect(Collectors.toList()));
-        if(goodsIds.size() != goodsResponses.size()) throw new NotFoundException("존재하지 않는 상품입니다");
+        final DeliveryEntity delivery = DeliveryEntity.ofAddressForReady(orderRequest.getAddress());
+        final List<OrderGoodsEntity> orderGoods = OrderGoodsEntity.fromOrderGoodsRequestsForProcess(orderRequest.getOrderGoodsIds());
 
+        eventPublisher.publishEvent(OrderEvent.createProcess());
 
-        return OrderResponse.fromEntity(orderRepository.save(null));
+        return OrderResponse.fromEntity(orderRepository.save(OrderEntity.ofDeliveryAndOrderGoods(delivery, orderGoods)));
     }
 
     public OrderResponse cancel(OrderRequest orderRequest) {
-        OrderEntity orderEntity = orderRepository.findById(orderRequest.getOrderId()).orElseThrow(() -> new NotFoundException("존재하지 않는 주문입니다"));
+        final OrderEntity orderEntity = orderRepository.findById(orderRequest.getOrderId()).orElseThrow(() -> new NotFoundException("존재하지 않는 주문입니다"));
 
-        return OrderResponse.fromEntity(orderEntity);
+        orderEntity.cancel(orderRequest.getOrderGoodsIds());
+
+        eventPublisher.publishEvent(OrderEvent.createCancel());
+        return OrderResponse.fromEntity(orderRepository.save(orderEntity));
     }
 }

@@ -1,5 +1,6 @@
 package kr.submit.goodsorderfeature.api.presentation;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.submit.goodsorderfeature.api.application.OrderService;
 import kr.submit.goodsorderfeature.api.domain.entity.OrderEntity;
@@ -7,6 +8,7 @@ import kr.submit.goodsorderfeature.api.dto.GoodsResponse;
 import kr.submit.goodsorderfeature.api.dto.OrderGoodsRequest;
 import kr.submit.goodsorderfeature.api.dto.OrderRequest;
 import kr.submit.goodsorderfeature.api.dto.OrderResponse;
+import kr.submit.goodsorderfeature.api.dto.view.OrderView;
 import kr.submit.goodsorderfeature.core.swagger.annotation.SwaggerApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +45,9 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderResponse> create(@RequestBody @Validated OrderRequest orderRequest) {
+    public ResponseEntity<OrderResponse> create(@Validated(OrderView.Create.class)
+                                                @JsonView(OrderView.Create.class)
+                                                @RequestBody OrderRequest orderRequest) {
 
         final OrderResponse orderResponse = orderService.create(orderRequest);
 
@@ -53,7 +57,11 @@ public class OrderController {
     }
 
     @PatchMapping("/cancel/{orderId}")
-    public OrderResponse cancelByOrderId(@PathVariable Long orderId, @RequestBody List<OrderGoodsRequest> orderGoodsRequests) {
+    public OrderResponse cancelByOrderId(@PathVariable Long orderId,
+                                         @Validated(OrderView.Cancel.class)
+                                         @JsonView(OrderView.Cancel.class)
+                                         @RequestBody List<OrderGoodsRequest> orderGoodsRequests) {
+
         return orderService.cancel(OrderRequest.create()
                 .setOrderId(orderId)
                 .setOrderGoodsIds(orderGoodsRequests));

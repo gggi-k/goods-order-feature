@@ -33,11 +33,6 @@ public class GoodsService {
         return GoodsResponse.fromEntity(goodsRepository.findById(goodsId).orElseThrow(() -> new NotFoundException("존재하지 않는 상품입니다")));
     }
 
-    @Transactional(readOnly = true)
-    public List<GoodsResponse> findAllByGoodsIds(List<Long> goodsIds) {
-        return GoodsResponse.fromEntities(goodsRepository.findAllById(goodsIds));
-    }
-
     public GoodsResponse create(GoodsRequest goodsRequest) {
 
         return GoodsResponse.fromEntity(goodsRepository.save(GoodsEntity.builder()

@@ -82,22 +82,6 @@ public class GoodsServiceTest {
         Assertions.assertEquals(goodsResponse.getPrice(), 35000);
     }
 
-    @DisplayName("상품 목록 포함 조회")
-    @Test
-    void findAllByGoodsIds() {
-
-        Long goodsId = goodsEntity.getGoodsId();
-
-        BDDMockito.given(goodsRepository.findAllById(BDDMockito.anyIterable()))
-                .willReturn(List.of(goodsEntity));
-
-        List<GoodsResponse> goodsResponses = goodsService.findAllByGoodsIds(List.of(goodsId));
-
-        Assertions.assertEquals(goodsResponses.size(), 1);
-        Assertions.assertEquals(goodsResponses.get(0).getGoodsId(), 1);
-        Assertions.assertEquals(goodsResponses.get(0).getName(), "상품명입니당");
-        Assertions.assertEquals(goodsResponses.get(0).getPrice(), 35000);
-    }
 
     @DisplayName("상품 등록")
     @Test
