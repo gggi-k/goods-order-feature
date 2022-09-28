@@ -57,6 +57,7 @@ public class DeliveryEntity extends BaseEntity {
 
     public void changeComplete() {
         this.deliveryStatus = DeliveryStatus.COMPLETE;
+        this.orderEntity.complete();
     }
 
 }

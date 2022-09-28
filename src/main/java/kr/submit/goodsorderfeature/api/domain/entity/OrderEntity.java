@@ -1,5 +1,6 @@
 package kr.submit.goodsorderfeature.api.domain.entity;
 
+import kr.submit.goodsorderfeature.api.domain.code.DeliveryStatus;
 import kr.submit.goodsorderfeature.api.domain.code.OrderStatus;
 import kr.submit.goodsorderfeature.api.domain.vo.OrderGoodsSummary;
 import kr.submit.goodsorderfeature.api.dto.OrderGoodsRequest;
@@ -39,7 +40,7 @@ public class OrderEntity extends BaseEntity {
 
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<OrderGoodsEntity> orderGoods = new ArrayList<>();
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -123,6 +124,11 @@ public class OrderEntity extends BaseEntity {
     public long getTotalPrice() {
         return this.orderGoods.stream().mapToLong(OrderGoodsEntity::getTotalPrice)
                 .sum();
+    }
+
+    public void complete() {
+        if(DeliveryStatus.COMPLETE != this.delivery.getDeliveryStatus()) throw new ForbiddenException("배달완료된 상태일때 주문완료가 가능합니다");
+        this.orderStatus = OrderStatus.COMPLETE;
     }
 
 }

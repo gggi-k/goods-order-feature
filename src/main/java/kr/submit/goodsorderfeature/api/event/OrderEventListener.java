@@ -11,7 +11,7 @@ public class OrderEventListener {
     @TransactionalEventListener(condition = "#orderEvent.isProcess()")
     public void handleOrderProcess(OrderEvent orderEvent) {
 
-        System.out.println("주문신청이 되었습니다");
+        System.out.println("주문접수 되었습니다");
     }
 
     @Async

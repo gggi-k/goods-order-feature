@@ -85,7 +85,7 @@ public class OrderGoodsEntity extends BaseEntity {
                 .goodsId(orderGoodsRequest.getGoodsId())
                 .name(orderGoodsRequest.getName())
                 .price(orderGoodsRequest.getPrice())
-                .count(orderGoodsRequest.getCount())
+                .count(-orderGoodsRequest.getCount())
                 .orderGoodsStatus(OrderGoodsStatus.CANCEL)
                 .build();
     }
