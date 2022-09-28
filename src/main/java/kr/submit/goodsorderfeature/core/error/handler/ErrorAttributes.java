@@ -7,12 +7,15 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.Map;
 
+
 @Component
 public class ErrorAttributes extends DefaultErrorAttributes {
 
     @Override
     public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
-        options.excluding(ErrorAttributeOptions.Include.STACK_TRACE, ErrorAttributeOptions.Include.EXCEPTION);
-        return super.getErrorAttributes(webRequest, options);
+        Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, options);
+        errorAttributes.remove("exception");
+        errorAttributes.remove("trace");
+        return errorAttributes;
     }
 }

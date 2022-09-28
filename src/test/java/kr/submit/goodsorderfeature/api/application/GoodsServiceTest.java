@@ -87,12 +87,32 @@ public class GoodsServiceTest {
     @Test
     void create() {
 
+        BDDMockito.given(goodsRepository.save(BDDMockito.any(GoodsEntity.class)))
+                .willReturn(goodsEntity);
+
+        GoodsResponse goodsResponse = goodsService.create(goodsRequest);
+
+        Assertions.assertEquals(goodsResponse.getGoodsId(), 1L);
+        Assertions.assertEquals(goodsResponse.getName(), "상품명입니당");
+        Assertions.assertEquals(goodsResponse.getPrice(), 35000);
+
     }
 
     @DisplayName("상품 수정")
     @Test
     void update() {
 
+        BDDMockito.given(goodsRepository.findById(BDDMockito.anyLong()))
+                .willReturn(Optional.of(goodsEntity));
+
+        BDDMockito.given(goodsRepository.save(BDDMockito.any(GoodsEntity.class)))
+                .willReturn(goodsEntity);
+
+        GoodsResponse goodsResponse = goodsService.update(goodsRequest);
+
+        Assertions.assertEquals(goodsResponse.getGoodsId(), 1L);
+        Assertions.assertEquals(goodsResponse.getName(), "상품명입니당");
+        Assertions.assertEquals(goodsResponse.getPrice(), 35000);
     }
 
     @DisplayName("상품 삭제")

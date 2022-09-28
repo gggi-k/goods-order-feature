@@ -91,6 +91,13 @@ https://goods-order-feature.herokuapp.com/
 7. 인증/인가 - 토큰
 
 8. 로그인 사용자 관리
+* jwt accesstoken 로그인
+
+* 계정 정보
+
+아이디: test1, 비밀번호: test1<br>
+아이디: test2, 비밀번호: test2
+
 
 9. 예외처리
 * 공통예외처리
@@ -99,6 +106,15 @@ https://goods-order-feature.herokuapp.com/
 
 10. 단위테스트
 
+* 상품 컨트롤러, 서비스 단위테스트
+
 11. 추가적용 기술
+    
+* HATEOAS - REST API 엔드포인트 변경제한으로 인한 리소스 형태로 관리
 
 ## 별도 추가 구현 기능
+
+* 상품 목록 조회
+* 상품 조회
+* 주문 조회
+* 배달 완료

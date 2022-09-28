@@ -27,11 +27,13 @@ public class OrderEntity extends BaseEntity {
     @Comment("주문아이디")
     private Long orderId;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "ORDER_STATUS", nullable = false)
     @Comment("주문상태")
-    private OrderStatus orderStatus;
+    private OrderStatus orderStatus = OrderStatus.PROCESS;
 
+    @Builder.Default
     @ToString.Exclude
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<OrderGoodsEntity> orderGoods = new ArrayList<>();
