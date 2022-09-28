@@ -19,6 +19,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -91,10 +92,10 @@ public class GoodsControllerTest {
         Long goodsId = goodsEntity.getGoodsId();
         GoodsResponse goodsResponse = GoodsResponse.fromEntity(this.goodsEntity);
 
-        BDDMockito.given(goodsService.findByGoodsId(goodsId))
+        BDDMockito.given(goodsService.findByGoodsId(BDDMockito.anyLong()))
                 .willReturn(goodsResponse);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/goods/{orderId}", goodsId)
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/goods/{goodsId}", goodsId)
                 .contentType(MediaTypes.HAL_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpectAll(
@@ -114,10 +115,15 @@ public class GoodsControllerTest {
     @Test
     void create() throws Exception {
 
-        BDDMockito.given(goodsService.create(goodsRequest))
-                .willReturn(GoodsResponse.fromEntity(this.goodsEntity));
+        GoodsResponse goodsResponse = GoodsResponse.fromEntity(this.goodsEntity);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/goods"))
+        BDDMockito.given(goodsService.create(BDDMockito.any()))
+                .willReturn(goodsResponse);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/goods")
+                .contentType(MediaTypes.HAL_JSON)
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .content(objectMapper.writeValueAsString(goodsRequest)))
                 .andExpectAll(
                     MockMvcResultMatchers.status().isCreated(),
                     MockMvcResultMatchers.header().exists(HttpHeaders.LOCATION)
@@ -135,10 +141,15 @@ public class GoodsControllerTest {
     @Test
     void update() throws Exception {
 
-        BDDMockito.given(goodsService.update(goodsRequest))
-                .willReturn(GoodsResponse.fromEntity(this.goodsEntity));
+        Long goodsId = goodsEntity.getGoodsId();
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/goods"))
+        BDDMockito.given(goodsService.update(BDDMockito.any()))
+                .willReturn(GoodsResponse.fromEntity(goodsEntity));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/goods/{goodsId}", goodsId)
+                .contentType(MediaTypes.HAL_JSON)
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .content(objectMapper.writeValueAsString(goodsRequest)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpectAll(
                         MockMvcResultMatchers.jsonPath("$.goodsId").value(1L),
@@ -154,7 +165,8 @@ public class GoodsControllerTest {
 
         Long goodsId = goodsEntity.getGoodsId();
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/goods", goodsId))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/goods/{goodsId}", goodsId)
+                .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent())
                 .andDo(print());
     }
