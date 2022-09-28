@@ -11,6 +11,8 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
 @Getter
 @ToString
 @Builder
+@DynamicInsert
+@DynamicUpdate
 @Entity
 @Table(name = "ORDER_GOODS")
 public class OrderGoodsEntity extends BaseEntity {
@@ -59,7 +63,7 @@ public class OrderGoodsEntity extends BaseEntity {
 
     @Setter
     @ManyToOne
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", updatable = false, nullable = false)
     private OrderEntity order;
 
     public static OrderGoodsEntity fromOrderGoodsRequestForProcess(OrderGoodsRequest orderGoodsRequest) {

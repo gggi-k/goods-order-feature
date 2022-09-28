@@ -56,6 +56,7 @@ public class OrderResponse {
                 .address(address.getAddress())
                 .addressDetail(address.getAddressDetail())
                 .zipCode(address.getZipCode())
+                .orderGoods(orderEntity.getOrderGoodsSummaries())
                 .build();
     }
 }

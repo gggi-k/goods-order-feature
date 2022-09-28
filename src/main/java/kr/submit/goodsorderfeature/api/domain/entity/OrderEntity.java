@@ -8,6 +8,8 @@ import kr.submit.goodsorderfeature.core.jpa.entity.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.*;
@@ -17,6 +19,8 @@ import java.util.*;
 @Getter
 @ToString
 @SuperBuilder
+@DynamicInsert
+@DynamicUpdate
 @Entity
 @Table(name = "ORDERS")
 public class OrderEntity extends BaseEntity {
@@ -38,7 +42,7 @@ public class OrderEntity extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<OrderGoodsEntity> orderGoods = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "DELIVERY_ID")
     private DeliveryEntity delivery;
 
@@ -81,7 +85,9 @@ public class OrderEntity extends BaseEntity {
             OrderGoodsSummary orderGoodsSummary = orderGoodsSummaryOptional.get();
             if(orderGoodsSummary.isNotCountOverZero(orderGoodsRequest.getCount())) throw new ForbiddenException("구매한 상품갯수보다 취소하는 상품갯수가 더많습니다");
 
-            list.add(OrderGoodsEntity.fromOrderGoodsRequestForCancel(orderGoodsRequest));
+            list.add(OrderGoodsEntity.fromOrderGoodsRequestForCancel(orderGoodsRequest
+                    .setName(orderGoodsSummary.getName())
+                    .setPrice(orderGoodsSummary.getPrice())));
         }
 
         this.addOrderGoods(list);
@@ -89,7 +95,7 @@ public class OrderEntity extends BaseEntity {
         if(this.isGoodsAllCancel()) this.orderStatus = OrderStatus.CANCEL;
     }
 
-    private List<OrderGoodsSummary> getOrderGoodsSummaries() {
+    public List<OrderGoodsSummary> getOrderGoodsSummaries() {
         return new ArrayList<>(this.getOrderGoodsSummariesForMap().values());
     }
 
