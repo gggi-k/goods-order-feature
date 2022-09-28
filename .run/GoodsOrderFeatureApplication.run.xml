@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="GoodsOrderFeatureApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="goods-order-feature.main" />
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
+    <option name="SPRING_BOOT_MAIN_CLASS" value="kr.submit.goodsorderfeature.GoodsOrderFeatureApplication" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+    <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndTriggerFile" />
+    <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="LaunchBrowser.Before.Run" url="localhost:8080/" />
+      <option name="LaunchBrowser.Before.Run" url="localhost:8080/h2-console" />
+    </method>
+  </configuration>
+</component>

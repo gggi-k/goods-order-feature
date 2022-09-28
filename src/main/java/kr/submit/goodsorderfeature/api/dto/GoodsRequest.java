@@ -1,0 +1,32 @@
+package kr.submit.goodsorderfeature.api.dto;
+
+import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.v3.oas.annotations.media.Schema;
+import kr.submit.goodsorderfeature.api.dto.view.GoodsView;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.UUID;
+
+@Accessors(chain = true)
+@NoArgsConstructor(staticName = "create")
+@Setter
+@Getter
+@ToString
+public class GoodsRequest {
+
+    @Schema(hidden = true)
+    private Long goodsId;
+
+    @NotBlank
+    @Schema(description = "상품명", example = "상품1")
+    private String name;
+
+    @Schema(description = "가격", example = "1000")
+    private long price;
+}
