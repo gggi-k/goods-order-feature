@@ -36,7 +36,7 @@ import java.util.Optional;
 @Import(SpringDocConfiguration.class)
 @SecurityScheme(type = SecuritySchemeType.HTTP, name = "jwtToken", scheme = "bearer", bearerFormat = "JWT")
 @OpenAPIDefinition(
-    info = @Info(title = "주문, 상품관리 기능", description = "주문, 상품관리\n 아이디: test1, 비밀번호: test1\n아이디: test2, 비밀번호: test2", version = "1.0.0"),
+    info = @Info(title = "주문, 상품관리 기능", description = "주문, 상품관리<br> 아이디: test1, 비밀번호: test1<br> 아이디: test2, 비밀번호: test2", version = "1.0.0"),
     security = @SecurityRequirement(name = "jwtToken")
 )
 public class SwaggerConfig {
@@ -58,7 +58,7 @@ public class SwaggerConfig {
                     Operation operation = new Operation();
                     Schema<?> schema = new ObjectSchema()
                             .addProperty(Login.Fields.userId, new StringSchema().description("사용자아이디").example("test1"))
-                            .addProperty(Login.Fields.password, new StringSchema().description("패스워드").example("1234"));
+                            .addProperty(Login.Fields.password, new StringSchema().description("패스워드").example("test1"));
                     RequestBody requestBody = new RequestBody().content(new Content().addMediaType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE, new MediaType().schema(schema)));
                     operation.requestBody(requestBody);
                     ApiResponses apiResponses = new ApiResponses();

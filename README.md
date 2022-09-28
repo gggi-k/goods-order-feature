@@ -10,6 +10,9 @@ http://localhost:8080
 ### h2-console
 http://localhost:8080/h2-console
 
+### Heroku (원격)
+https://goods-order-feature.herokuapp.com/
+
 
 ## 개발언어
 
@@ -90,6 +93,9 @@ http://localhost:8080/h2-console
 8. 로그인 사용자 관리
 
 9. 예외처리
+* 공통예외처리
+* 수정시 해당 리소스 미존재시 에러
+* 주문취소시 
 
 10. 단위테스트
 

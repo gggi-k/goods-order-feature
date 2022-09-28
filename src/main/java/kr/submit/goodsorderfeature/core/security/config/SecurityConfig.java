@@ -67,8 +67,8 @@ public class SecurityConfig {
         @Bean
         public UserDetailsService inMemoryUserDetailsService() {
             return new InMemoryUserDetailsManager(
-                new User("test1", "$2a$10$gXArtKBSn897YWnWzSwxZO7BDtXhP75EgbRMLUswvaMdGc5gq8mS", Collections.emptyList()),
-                new User("test2", "$2a$10$4eMgxuflkbxjcnYHST1IeODR21K.9B20UuJcci5O8//xu.zHiffCa", Collections.emptyList())
+                new User("test1", "$2a$10$TQ19kH.Q3c6qzn94Tgh6R.jWJveqW8plsAyEGnL1i09rRvmnSv9j.", Collections.emptyList()),
+                new User("test2", "$2a$10$Bxiy1aHtGxbI2/4ohVavAegO8aRyP4sA5qvfIHhzfab6x9meXXABW", Collections.emptyList())
             );
         }
 
