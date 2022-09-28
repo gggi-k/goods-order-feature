@@ -6,6 +6,8 @@ import kr.submit.goodsorderfeature.core.jpa.entity.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -14,6 +16,8 @@ import javax.persistence.*;
 @Getter
 @ToString
 @SuperBuilder
+@DynamicInsert
+@DynamicUpdate
 @Entity
 @Table(name = "DELIVERY")
 public class DeliveryEntity extends BaseEntity {
@@ -53,6 +57,7 @@ public class DeliveryEntity extends BaseEntity {
 
     public void changeComplete() {
         this.deliveryStatus = DeliveryStatus.COMPLETE;
+        this.orderEntity.complete();
     }
 
 }

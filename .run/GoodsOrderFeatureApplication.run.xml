@@ -13,8 +13,8 @@
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
     <method v="2">
       <option name="Make" enabled="true" />
-      <option name="LaunchBrowser.Before.Run" url="localhost:8080/" />
-      <option name="LaunchBrowser.Before.Run" url="localhost:8080/h2-console" />
+      <option name="LaunchBrowser.Before.Run" url="http://localhost:8080/" />
+      <option name="LaunchBrowser.Before.Run" url="http://localhost:8080/h2-console" />
     </method>
   </configuration>
 </component>

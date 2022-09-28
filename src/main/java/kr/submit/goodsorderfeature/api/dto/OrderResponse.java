@@ -29,6 +29,9 @@ public class OrderResponse {
     @Schema(description = "총가격", example = "25435000")
     private final long totalPrice;
 
+    @Schema(description = "배달아이디", example = "1")
+    private final Long deliveryId;
+
     @Schema(description = "배달상태", example = "READY")
     private final DeliveryStatus deliveryStatus;
 
@@ -52,10 +55,12 @@ public class OrderResponse {
                 .orderId(orderEntity.getOrderId())
                 .orderStatus(orderEntity.getOrderStatus())
                 .totalPrice(orderEntity.getTotalPrice())
+                .deliveryId(delivery.getDeliveryId())
                 .deliveryStatus(delivery.getDeliveryStatus())
                 .address(address.getAddress())
                 .addressDetail(address.getAddressDetail())
                 .zipCode(address.getZipCode())
+                .orderGoods(orderEntity.getOrderGoodsSummaries())
                 .build();
     }
 }

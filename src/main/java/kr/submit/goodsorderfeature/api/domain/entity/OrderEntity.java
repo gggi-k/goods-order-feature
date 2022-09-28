@@ -1,5 +1,6 @@
 package kr.submit.goodsorderfeature.api.domain.entity;
 
+import kr.submit.goodsorderfeature.api.domain.code.DeliveryStatus;
 import kr.submit.goodsorderfeature.api.domain.code.OrderStatus;
 import kr.submit.goodsorderfeature.api.domain.vo.OrderGoodsSummary;
 import kr.submit.goodsorderfeature.api.dto.OrderGoodsRequest;
@@ -8,6 +9,8 @@ import kr.submit.goodsorderfeature.core.jpa.entity.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.*;
@@ -17,6 +20,8 @@ import java.util.*;
 @Getter
 @ToString
 @SuperBuilder
+@DynamicInsert
+@DynamicUpdate
 @Entity
 @Table(name = "ORDERS")
 public class OrderEntity extends BaseEntity {
@@ -35,10 +40,10 @@ public class OrderEntity extends BaseEntity {
 
     @Builder.Default
     @ToString.Exclude
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<OrderGoodsEntity> orderGoods = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "DELIVERY_ID")
     private DeliveryEntity delivery;
 
@@ -81,7 +86,9 @@ public class OrderEntity extends BaseEntity {
             OrderGoodsSummary orderGoodsSummary = orderGoodsSummaryOptional.get();
             if(orderGoodsSummary.isNotCountOverZero(orderGoodsRequest.getCount())) throw new ForbiddenException("구매한 상품갯수보다 취소하는 상품갯수가 더많습니다");
 
-            list.add(OrderGoodsEntity.fromOrderGoodsRequestForCancel(orderGoodsRequest));
+            list.add(OrderGoodsEntity.fromOrderGoodsRequestForCancel(orderGoodsRequest
+                    .setName(orderGoodsSummary.getName())
+                    .setPrice(orderGoodsSummary.getPrice())));
         }
 
         this.addOrderGoods(list);
@@ -89,7 +96,7 @@ public class OrderEntity extends BaseEntity {
         if(this.isGoodsAllCancel()) this.orderStatus = OrderStatus.CANCEL;
     }
 
-    private List<OrderGoodsSummary> getOrderGoodsSummaries() {
+    public List<OrderGoodsSummary> getOrderGoodsSummaries() {
         return new ArrayList<>(this.getOrderGoodsSummariesForMap().values());
     }
 
@@ -117,6 +124,11 @@ public class OrderEntity extends BaseEntity {
     public long getTotalPrice() {
         return this.orderGoods.stream().mapToLong(OrderGoodsEntity::getTotalPrice)
                 .sum();
+    }
+
+    public void complete() {
+        if(DeliveryStatus.COMPLETE != this.delivery.getDeliveryStatus()) throw new ForbiddenException("배달완료된 상태일때 주문완료가 가능합니다");
+        this.orderStatus = OrderStatus.COMPLETE;
     }
 
 }

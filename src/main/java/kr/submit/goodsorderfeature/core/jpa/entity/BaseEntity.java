@@ -48,7 +48,7 @@ public abstract class BaseEntity {
     @ColumnDefault("'ANONYMOUS'")
     @Comment("등록자")
     @Column(name = "CREATED_BY", updatable = false, nullable = false)
-    private String createdBy;
+    private String createdBy = "ANONYMOUS";
 
     @LastModifiedDate
     @Comment("갱신일시")
