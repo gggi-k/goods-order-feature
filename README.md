@@ -127,46 +127,38 @@ https://goods-order-feature.herokuapp.com/
 아이디: test2, 비밀번호: test2
 
 
-8. 예외처리
+
+8. 상품 목록 조회
+
+<img src=".img/0008.jpg">
+
+9. 상품 조회
+
+<img src=".img/0009.jpg">
+
+10. 주문 조회
+
+<img src=".img/0015.jpg">
+
+11. 배달 완료(배달완료후 주문완료처리)
+
+<img src=".img/0018.jpg">
+<img src=".img/0019.jpg">
+
+12. 배달완료 후 주문취소시(불가능)
+
+<img src=".img/0020.jpg">
+<img src=".img/0021.jpg">
+
+13. 예외처리
 * 공통예외처리
 * 수정시 해당 리소스 미존재시 에러
 * 주문취소시 미배송상태일떄 가능
 * 주문취소시 취소상품목록 등록된 상품 없으면 에러반환
 * 주문취소시 구매한갯수보다 취소갯수가 더많으면 반환
 
-9. 단위테스트
+14. 단위테스트
 
 * 상품 컨트롤러, 서비스 단위테스트
 
 <img src=".img/0023.jpg">
-
-10. 추가적용 기술
-    
-* HATEOAS - REST API 엔드포인트 변경제한으로 인한 리소스 형태로 관리
-
-<img src=".img/0009.jpg">
-
-## 별도 추가 구현 기능 (필요하다 판단)
-
-* 상품 목록 조회
-
-<img src=".img/0008.jpg">
-  
-* 상품 조회
-
-<img src=".img/0009.jpg">
-
-* 주문 조회
-
-<img src=".img/0015.jpg">
-
-
-* 배달 완료(배달완료후 주문완료처리)
-
-<img src=".img/0018.jpg">
-<img src=".img/0019.jpg">
-
-* 배달완료 후 주문취소시(불가능)
-
-<img src=".img/0020.jpg">
-<img src=".img/0021.jpg">
