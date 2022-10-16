@@ -6,7 +6,7 @@
       <option name="region" />
       <option name="useCurrentConnection" value="false" />
     </extension>
-    <option name="SPRING_BOOT_MAIN_CLASS" value="GoodsOrderFeatureApplication" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="kr.project.goodsorderfeature.GoodsOrderFeatureApplication" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <option name="SHORTEN_COMMAND_LINE" value="NONE" />
     <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndTriggerFile" />
